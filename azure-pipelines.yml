@@ -1,7 +1,5 @@
 variables:
-  Major: '0'
-  Minor: '1'
-  Patch: $(rev:r)
+  majorMinorVersion: 1.0
 
 trigger:
 - master
@@ -17,8 +15,4 @@ steps:
 - task: DotNetCoreCLI@2
   inputs:
     command: pack
-    packagesToPack: 'CsvParser/CsvParser.csproj'
-    versioningScheme: byPrereleaseNumber
-    majorVersion: '$(Major)'
-    minorVersion: '$(Minor)'
-    patchVersion: '$(Patch)'
+    versioningScheme: byBuildNumber
