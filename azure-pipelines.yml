@@ -18,3 +18,4 @@ steps:
   inputs:
     command: pack
     configuration: 'release'
+    patchVersion: $(rev:r)
