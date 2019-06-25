@@ -10,6 +10,14 @@ pool:
   name: Hosted Windows 2019 with VS2019
 
 steps:
+
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
+  inputs:
+    packageType: sdk
+    version: 2.2.x
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
 # You need to install this into your DevOps org
 # https://marketplace.visualstudio.com/items?itemName=gittools.gitversion
 - task: gittools.gitversion.gitversion-task.GitVersion@4
