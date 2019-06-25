@@ -7,16 +7,23 @@ trigger:
 - master
 
 pool:
-  name: Hosted Windows 2019 with VS2019
+  vmImage: 'Ubuntu 16.04'
 
 steps:
 
-- task: UseDotNet@2
-  displayName: 'Use .NET Core sdk'
+#- task: UseDotNet@2
+#  displayName: 'Use .NET Core sdk'
+#  inputs:
+#    packageType: sdk
+#    version: 2.2.x
+#    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+# See: http://loudandabrasive.com/effective-nuget-versioning-in-azure-devops
+- task: NuGetCommand@2
   inputs:
-    packageType: sdk
-    version: 2.2.x
-    installationPath: $(Agent.ToolsDirectory)/dotnet
+    command: custom
+    arguments: install GitVersion.CommandLine -Version 4.0.0 -OutputDirectory $(Build.BinariesDirectory)/tools -ExcludeVersion
+- script: mono $(Build.BinariesDirectory)/tools/GitVersion.CommandLine/tools/GitVersion.exe /output buildserver /nofetch
 
 # You need to install this into your DevOps org
 # https://marketplace.visualstudio.com/items?itemName=gittools.gitversion
