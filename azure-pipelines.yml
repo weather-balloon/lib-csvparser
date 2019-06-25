@@ -7,15 +7,28 @@ trigger:
 - master
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: Hosted Windows 2019 with VS2019
 
 steps:
-- task: DotNetCoreCLI@2
+# You need to install this into your DevOps org
+# https://marketplace.visualstudio.com/items?itemName=gittools.gitversion
+- task: gittools.gitversion.gitversion-task.GitVersion@4
+  displayName: GitVersion
   inputs:
-    command: 'test'
+    preferBundledVersion: false
 
 - task: DotNetCoreCLI@2
   inputs:
+    command: test
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"'
+
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet pack'
+  inputs:
     command: pack
-    configuration: 'release'
-    patchVersion: $(rev:r)
+    packagesToPack: CsvParser/CsvParser.csproj
+    nobuild: true
+    versioningScheme: byEnvVar
+    versionEnvVar: GitVersion.NuGetVersion
+
+
