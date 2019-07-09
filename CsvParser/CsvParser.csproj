@@ -2,8 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>0.1.0</Version>
-    <Description>A C# facade for CSV parsing</Description>
+    <AssemblyName>CsvParser</AssemblyName>
+    <Description>A C# facade for CSV parsing to JSON</Description>
+    <Authors>Duncan Dickinson</Authors>
+    <Copyright>2019</Copyright>
+    <PackageTags>data</PackageTags>
+    <PackageProjectUrl>https://github.com/weather-balloon/lib-csvparser</PackageProjectUrl>
+    <PackageLicenseExpression>BSD-2-Clause</PackageLicenseExpression>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/weather-balloon/lib-csvparser</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
