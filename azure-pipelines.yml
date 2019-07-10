@@ -42,8 +42,7 @@ steps:
   displayName: 'dotnet pack'
   inputs:
     command: pack
-    nobuild: true
-    arguments: -c Release
+    arguments: -c Release --no-build
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet push'
@@ -51,6 +50,5 @@ steps:
     command: 'push'
     searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;-:$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
     feedPublish: 'wb-artifacts'
-    nobuild: true
-    arguments: -c Release
+    arguments: -c Release --no-build
 
