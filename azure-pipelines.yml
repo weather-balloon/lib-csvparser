@@ -49,4 +49,5 @@ steps:
     command: 'push'
     searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;-:$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
     feedPublish: 'wb-artifacts'
+    nobuild: true
 
