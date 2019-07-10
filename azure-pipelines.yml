@@ -15,23 +15,27 @@ steps:
 
 # See: http://loudandabrasive.com/effective-nuget-versioning-in-azure-devops
 - task: NuGetCommand@2
-  displayName: 
+  displayName: Install and run GitVersion
   inputs:
     command: custom
     arguments: install GitVersion.CommandLine -Version 4.0.0 -OutputDirectory $(Build.BinariesDirectory)/tools -ExcludeVersion
+
 - script: mono $(Build.BinariesDirectory)/tools/GitVersion.CommandLine/tools/GitVersion.exe /output buildserver /nofetch
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
   inputs:
     command: build
-    arguments: -c Release /p:Version='$(GitVersion.NuGetVersion)'
+    versioningScheme: byEnvVar
+    versionEnvVar: 
+    arguments: -c Release
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet test'
   inputs:
     command: test
-    arguments: -c Release --no-build
+    nobuild: true
+    arguments: -c Release 
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack'
@@ -39,5 +43,6 @@ steps:
     command: pack
     packagesToPack: CsvParser/CsvParser.csproj
     nobuild: true
+    arguments: -c Release
 
 
