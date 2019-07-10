@@ -6,14 +6,13 @@ pool:
 
 steps:
 
-- task: UseDotNet@2
-  displayName: 'Use .NET Core sdk'
-  inputs:
-    packageType: sdk
-    version: 2.2.x
-    installationPath: $(Agent.ToolsDirectory)/dotnet
+#- task: UseDotNet@2
+#  displayName: 'Use .NET Core sdk'
+#  inputs:
+#    packageType: sdk
+#    version: 2.2.x
+#    installationPath: $(Agent.ToolsDirectory)/dotnet
 
-# See: http://loudandabrasive.com/effective-nuget-versioning-in-azure-devops
 - task: NuGetCommand@2
   displayName: Install and run GitVersion
   inputs:
@@ -41,7 +40,6 @@ steps:
   displayName: 'dotnet pack'
   inputs:
     command: pack
-    packagesToPack: CsvParser/CsvParser.csproj
     nobuild: true
     arguments: -c Release
 
