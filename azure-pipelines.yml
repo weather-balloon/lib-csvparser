@@ -43,9 +43,10 @@ steps:
   inputs:
     command: pack
 
-- task: NuGetCommand@2
-  displayName: 'NuGet push'
+- task: DotNetCoreCLI@2
+  displayName: 'dotnet push'
   inputs:
-    command: push
-    publishVstsFeed: 'wb-artifacts'
-    allowPackageConflicts: false
+    command: 'push'
+    searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;-:$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
+    feedPublish: 'wb-artifacts'
+
