@@ -14,7 +14,7 @@ steps:
 #    installationPath: $(Agent.ToolsDirectory)/dotnet
 
 - task: NuGetCommand@2
-  displayName: Install and run GitVersion
+  displayName: Install GitVersion
   inputs:
     command: custom
     arguments: install GitVersion.CommandLine -Version 4.0.0 -OutputDirectory $(Build.BinariesDirectory)/tools -ExcludeVersion
@@ -43,6 +43,8 @@ steps:
   inputs:
     command: pack
     arguments: -c Release --no-build
+
+- task: ArchiveFiles@2
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet push'
