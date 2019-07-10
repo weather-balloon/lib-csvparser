@@ -25,8 +25,7 @@ steps:
   displayName: 'dotnet build'
   inputs:
     command: build
-    versioningScheme: byEnvVar
-    versionEnvVar: 
+    versioningScheme: byBuildNumber
     arguments: -c Release
 
 - task: DotNetCoreCLI@2
