@@ -19,7 +19,10 @@ steps:
     command: custom
     arguments: install GitVersion.CommandLine -Version 4.0.0 -OutputDirectory $(Build.BinariesDirectory)/tools -ExcludeVersion
 
-- script: mono $(Build.BinariesDirectory)/tools/GitVersion.CommandLine/tools/GitVersion.exe /output buildserver /nofetch
+- task: CmdLine@2
+  displayName: Run GitVersion
+  inputs:
+    script: mono $(Build.BinariesDirectory)/tools/GitVersion.CommandLine/tools/GitVersion.exe /output buildserver /nofetch
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet build'
@@ -39,7 +42,3 @@ steps:
   displayName: 'dotnet pack'
   inputs:
     command: pack
-    nobuild: true
-    arguments: -c Release
-
-
