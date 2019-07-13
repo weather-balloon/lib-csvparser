@@ -6,12 +6,12 @@ pool:
 
 steps:
 
-#- task: UseDotNet@2
-#  displayName: 'Use .NET Core sdk'
-#  inputs:
-#    packageType: sdk
-#    version: 2.2.x
-#    installationPath: $(Agent.ToolsDirectory)/dotnet
+- task: UseDotNet@2
+  displayName: 'Use .NET Core sdk'
+  inputs:
+    packageType: sdk
+    version: 2.2.x
+    installationPath: $(Agent.ToolsDirectory)/dotnet
 
 - task: NuGetCommand@2
   displayName: Install GitVersion
@@ -29,26 +29,21 @@ steps:
   inputs:
     command: build
     versioningScheme: byBuildNumber
-    arguments: -c Release
+    arguments: '--configuration Release'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet test'
   inputs:
     command: test
-    nobuild: true
-    arguments: -c Release 
+    arguments: '--configuration $(buildConfiguration) --collect "Code coverage"' 
 
-- task: DotNetCoreCLI@2
-  displayName: 'dotnet pack'
-  inputs:
-    command: 'pack'
-    nobuild: true
-    outputDir: '$(Build.ArtifactStagingDirectory)'
+- task: PublishBuildArtifacts@1
+
+- script: dotnet pack /p:PackageVersion=$(Build.BuildNumber)
     
-- task: DotNetCoreCLI@2
+- task: NuGetCommand@2
   inputs:
-    command: 'push'
-    nobuild: true
-    searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;-:$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
-    feedPublish: 'wb-artifacts'
+    command: push
+    publishVstsFeed: 'wb-artifacts'
+    versioningScheme: byBuildNumber
 
