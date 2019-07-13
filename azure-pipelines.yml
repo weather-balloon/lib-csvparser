@@ -41,10 +41,14 @@ steps:
 - task: DotNetCoreCLI@2
   displayName: 'dotnet pack'
   inputs:
-    custom: pack -c Release --no-build
+    command: 'pack'
+    nobuild: true
+    outputDir: '$(Build.ArtifactStagingDirectory)'
     
-- task: NuGetCommand@2
+- task: DotNetCoreCLI@2
   inputs:
     command: 'push'
-    publishVstsFeed: 'wb-artifacts'
+    nobuild: true
+    searchPatternPush: '$(Build.ArtifactStagingDirectory)/*.nupkg;-:$(Build.ArtifactStagingDirectory)/*.Tests.nupkg'
+    feedPublish: 'wb-artifacts'
 
