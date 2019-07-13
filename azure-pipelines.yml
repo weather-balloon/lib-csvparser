@@ -1,7 +1,12 @@
 trigger:
 - master
 
+variables:
+
+  buildConfiguration: Release
+
 pool:
+
   vmImage: 'Ubuntu 16.04'
 
 steps:
@@ -29,7 +34,7 @@ steps:
   inputs:
     command: build
     versioningScheme: byBuildNumber
-    arguments: '--configuration Release'
+    arguments: '--configuration $(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
   displayName: 'dotnet test'
