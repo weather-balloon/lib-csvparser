@@ -42,9 +42,7 @@ steps:
     command: test
     arguments: '--configuration $(buildConfiguration) --collect "Code coverage"' 
 
-- task: PublishBuildArtifacts@1
-
-- script: dotnet pack /p:PackageVersion=$(Build.BuildNumber)
+- script: dotnet pack /p:PackageVersion=$(Build.BuildNumber) --output $(Build.ArtifactStagingDirectory)
     
 - task: NuGetCommand@2
   inputs:
